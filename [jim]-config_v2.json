@@ -1,0 +1,946 @@
+{
+  "modelFieldsMap" : {
+    "ProtectEcology" : {
+      "enable" : {
+        "value" : true
+      },
+      "cooperateWater" : {
+        "value" : true
+      },
+      "cooperateWaterList" : {
+        "value" : {
+          "0ymnnfq0rtgglj1faz57z1v8qjaq8540" : 20,
+          "0cceg021k0k8jp12zgplu0wlj6dq0090" : 20
+        }
+      },
+      "cooperateWaterTotalLimitList" : {
+        "value" : {
+          "0ymnnfq0rtgglj1faz57z1v8qjaq8540" : 20,
+          "0cceg021k0k8jp12zgplu0wlj6dq0090" : 20
+        }
+      },
+      "protectMarathonType" : {
+        "value" : 0
+      },
+      "protectMarathonList" : {
+        "value" : { }
+      },
+      "protectNewAncientTreeType" : {
+        "value" : 0
+      },
+      "protectNewAncientTreeList" : {
+        "value" : { }
+      },
+      "protectTree" : {
+        "value" : false
+      },
+      "protectTreeList" : {
+        "value" : { }
+      },
+      "protectReserve" : {
+        "value" : false
+      },
+      "reserveList" : {
+        "value" : { }
+      },
+      "protectReserveMinNum" : {
+        "value" : false
+      },
+      "protectReserveNum" : {
+        "value" : 1
+      },
+      "protectAnimal" : {
+        "value" : false
+      },
+      "protectAnimalList" : {
+        "value" : [ ]
+      },
+      "protectBeachMinNum" : {
+        "value" : false
+      },
+      "protectBeachNum" : {
+        "value" : 1
+      },
+      "protectBeach" : {
+        "value" : false
+      },
+      "protectOceanList" : {
+        "value" : { }
+      }
+    },
+    "GreenFinance" : {
+      "enable" : {
+        "value" : false
+      },
+      "greenFinanceLsxd" : {
+        "value" : false
+      },
+      "greenFinanceLscg" : {
+        "value" : false
+      },
+      "greenFinanceLsbg" : {
+        "value" : false
+      },
+      "greenFinanceWdxd" : {
+        "value" : false
+      },
+      "greenFinanceLswl" : {
+        "value" : false
+      },
+      "greenFinancePointFriend" : {
+        "value" : false
+      },
+      "greenFinanceDonation" : {
+        "value" : false
+      }
+    },
+    "AntOcean" : {
+      "enable" : {
+        "value" : true
+      },
+      "queryTaskList" : {
+        "value" : true
+      },
+      "AutoAntOceanAntiepTaskList" : {
+        "value" : true
+      },
+      "AntOceanAntiepTaskList" : {
+        "value" : [ "随机任务：玩一玩保卫向日葵", "随机任务：玩一玩生存33天", "随机任务：玩一玩时光杂货店", "随机任务：玩一玩得拼图", "随机任务：玩一玩梦幻消除战", "随机任务：玩一玩青云诀之伏魔", "随机任务：玩一玩向僵尸开炮", "随机任务：玩一玩我的花园世界" ]
+      },
+      "cleanOceanType" : {
+        "value" : 0
+      },
+      "cleanOceanList" : {
+        "value" : [ ]
+      },
+      "exchangeUniversalPiece" : {
+        "value" : true
+      },
+      "useUniversalPiece" : {
+        "value" : true
+      },
+      "replica" : {
+        "value" : true
+      },
+      "operateInterval" : {
+        "value" : 1200
+      }
+    },
+    "AntStall" : {
+      "enable" : {
+        "value" : true
+      },
+      "openShopType" : {
+        "value" : 2
+      },
+      "openShopList" : {
+        "value" : [ ]
+      },
+      "closeShop" : {
+        "value" : true
+      },
+      "closeShopTime" : {
+        "value" : 120
+      },
+      "pasteTicketType" : {
+        "value" : 0
+      },
+      "pasteTicketList" : {
+        "value" : [ ]
+      },
+      "throwManureType" : {
+        "value" : 0
+      },
+      "throwManureList" : {
+        "value" : [ ]
+      },
+      "manualCollectManure" : {
+        "value" : true
+      },
+      "sendBackShop" : {
+        "value" : true
+      },
+      "sendBackShopTime" : {
+        "value" : 121
+      },
+      "sendBackShopWhiteList" : {
+        "value" : [ ]
+      },
+      "sendBackShopBlackList" : {
+        "value" : [ ]
+      },
+      "inviteOpenShopType" : {
+        "value" : 0
+      },
+      "inviteOpenShopList" : {
+        "value" : [ ]
+      },
+      "taskList" : {
+        "value" : true
+      },
+      "AutoAntStallTaskList" : {
+        "value" : true
+      },
+      "AntStallTaskList" : {
+        "value" : [ ]
+      },
+      "doTaskOnce" : {
+        "value" : true
+      },
+      "donate" : {
+        "value" : true
+      },
+      "nextVillage" : {
+        "value" : false
+      },
+      "inviteRegister" : {
+        "value" : false
+      },
+      "inviteRegisterList" : {
+        "value" : [ ]
+      },
+      "assistFriend" : {
+        "value" : false
+      },
+      "assistFriendList" : {
+        "value" : [ ]
+      }
+    },
+    "AntOrchard" : {
+      "enable" : {
+        "value" : true
+      },
+      "executeInterval" : {
+        "value" : 1955,
+        "minLimit" : 500
+      },
+      "orchardAutoHarvest" : {
+        "value" : true
+      },
+      "orchardAutoPlant" : {
+        "value" : true
+      },
+      "orchardListTask" : {
+        "value" : true
+      },
+      "AutoAntOrchardTaskList" : {
+        "value" : true
+      },
+      "AntOrchardTaskList" : {
+        "value" : [ "去番茄音乐听歌赚钱", "钓鱼1次", "\"抢\"农货得120000肥料", "逛一逛美团领福利", "逛一逛淘宝拍照", "逛一逛今日头条", "逛助农好货得肥料", "向僵尸开炮通关1次", "下载蚂蚁阿福看健康攻略", "去闪购领红包点外卖", "逛一逛闲鱼", "几何王国闯关3次", "从支付宝首页访问农场", "完成1单手机数码回收", "疯狂水世界捡物资10次", "逛好物最高得1500肥料", "逛一逛点淘", "逛下姜栀子得肥料", "下载蚂蚁财富APP", "逛一逛快手", "逛一逛签到领现金", "逛一逛闪购外卖", "逛一逛百度地图", "完成1笔旧衣回收", "到店支付1笔得100肥", "玩灵魂序章锻造20次", "去游戏中心玩游戏", "逛浙江农货得肥料", "疯狂水世界探险船闯5关", "向往的生活完成3个订单", "去淘金币赢20亿" ]
+      },
+      "orchardSpreadManure" : {
+        "value" : true
+      },
+      "useBatchSpread" : {
+        "value" : true
+      },
+      "orchardSpreadManureSceneList" : {
+        "value" : {
+          "main" : 20
+        }
+      },
+      "drawGameCenterAward" : {
+        "value" : true
+      },
+      "assistFriend" : {
+        "value" : true
+      },
+      "assistFriendList" : {
+        "value" : [ "2088822743053170", "2088632089018542", "2088402108801985" ]
+      }
+    },
+    "AntDodo" : {
+      "enable" : {
+        "value" : true
+      },
+      "useProp" : {
+        "value" : true
+      },
+      "usePropList" : {
+        "value" : [ "UNIVERSAL_CARD_7_DAYS", "COLLECT_HISTORY_ANIMAL_7_DAYS", "COLLECT_TO_FRIEND_TIMES_7_DAYS", "COLLECT_TIMES_7_DAYS" ]
+      },
+      "useCollectTimingType" : {
+        "value" : 0
+      },
+      "useUniversalCardBookStatusType" : {
+        "value" : 1
+      },
+      "useUniversalCardBookCollectedStatusType" : {
+        "value" : 0
+      },
+      "useUniversalCardBookCollectedhasCollected" : {
+        "value" : false
+      },
+      "useUniversalCardMedalGenerationStatusType" : {
+        "value" : 0
+      },
+      "useUniversalCardFantasticLevelType" : {
+        "value" : 2
+      },
+      "bookMedal" : {
+        "value" : false
+      },
+      "bookMedalOptions" : {
+        "value" : [ ]
+      },
+      "collectToFriendType" : {
+        "value" : 0
+      },
+      "collectToFriendList" : {
+        "value" : [ ]
+      },
+      "giftToFriend" : {
+        "value" : false
+      },
+      "giftToFriendBookStatusType" : {
+        "value" : 0
+      },
+      "giftToFriendBookCollectedStatusType" : {
+        "value" : 0
+      },
+      "giftToFriendMedalGenerationStatusType" : {
+        "value" : 0
+      },
+      "giftToFriendFantasticLevelType" : {
+        "value" : 0
+      },
+      "giftToFriendList" : {
+        "value" : [ ]
+      }
+    },
+    "AntFarm" : {
+      "enable" : {
+        "value" : true
+      },
+      "AutoAntFarmDoFarmTaskList" : {
+        "value" : true
+      },
+      "AntFarmDoFarmTaskList" : {
+        "value" : [ "用花呗完成一笔支付", "到店付款", "线上支付", "逛闪购外卖1元起吃" ]
+      },
+      "useNewEggTool" : {
+        "value" : true
+      },
+      "useAccelerateTool" : {
+        "value" : true
+      },
+      "useAccelerateToolOptions" : {
+        "value" : [ "USE_ACCELERATE_TOOL_WHEN_MAX_EMOTION" ]
+      },
+      "useBigEaterTool" : {
+        "value" : true
+      },
+      "useSpecialFood" : {
+        "value" : true
+      },
+      "useSpecialFoodCountLimit" : {
+        "value" : 1
+      },
+      "rewardFriend" : {
+        "value" : false
+      },
+      "recallAnimalType" : {
+        "value" : 0
+      },
+      "feedAnimal" : {
+        "value" : true
+      },
+      "feedFriendAnimal" : {
+        "value" : false
+      },
+      "feedFriendAnimalList" : {
+        "value" : {
+          "2088622679502920" : 10
+        }
+      },
+      "hireAnimalType" : {
+        "value" : 2
+      },
+      "hireAnimalList" : {
+        "value" : [ ]
+      },
+      "sendBackAnimalWay" : {
+        "value" : 1
+      },
+      "sendBackAnimalType" : {
+        "value" : 2
+      },
+      "sendFriendList" : {
+        "value" : [ ]
+      },
+      "notifyFriendType" : {
+        "value" : 0
+      },
+      "notifyFriendList" : {
+        "value" : [ ]
+      },
+      "ornamentsDressUp" : {
+        "value" : false
+      },
+      "ornamentsDressUpList" : {
+        "value" : [ ]
+      },
+      "ornamentsDressUpDays" : {
+        "value" : 7
+      },
+      "drawMachine" : {
+        "value" : false
+      },
+      "AutoAntFarmDrawMachineTaskList" : {
+        "value" : true
+      },
+      "AntFarmDrawMachineTaskList" : {
+        "value" : [ ]
+      },
+      "IPexchangeBenefit" : {
+        "value" : false
+      },
+      "donationType" : {
+        "value" : 1
+      },
+      "donationAmount" : {
+        "value" : 1
+      },
+      "competition" : {
+        "value" : true
+      },
+      "competitionTarget" : {
+        "value" : 0,
+        "maxLimit" : 5,
+        "minLimit" : 0
+      },
+      "competitionParams" : {
+        "value" : "0,0,2"
+      },
+      "competitionTimer" : {
+        "value" : "195940"
+      },
+      "competitionRestTime" : {
+        "value" : "2000-1900"
+      },
+      "family" : {
+        "value" : true
+      },
+      "familyOptions" : {
+        "value" : [ "familySign" ]
+      },
+      "notInviteList" : {
+        "value" : [ ]
+      },
+      "enableSleep" : {
+        "value" : true
+      },
+      "sleepTime" : {
+        "value" : "2001"
+      },
+      "sleepMinutes" : {
+        "value" : 590,
+        "maxLimit" : 600,
+        "minLimit" : 1
+      },
+      "recordFarmGame" : {
+        "value" : true
+      },
+      "farmGameTime" : {
+        "value" : [ "1700-2000" ]
+      },
+      "drawGameCenterAward" : {
+        "value" : true
+      },
+      "gameCenterBuyMallItem" : {
+        "value" : true
+      },
+      "gameCenterBuyMallItemList" : {
+        "value" : {
+          "SK20250707007480" : 1,
+          "SK20241105005057" : 1
+        }
+      },
+      "kitchen" : {
+        "value" : true
+      },
+      "chickenDiary" : {
+        "value" : true
+      },
+      "harvestProduce" : {
+        "value" : true
+      },
+      "receiveFarmToolReward" : {
+        "value" : true
+      },
+      "receiveFarmTaskAward" : {
+        "value" : true
+      },
+      "acceptGift" : {
+        "value" : false
+      },
+      "visitFriendList" : {
+        "value" : { }
+      }
+    },
+    "AntSports" : {
+      "enable" : {
+        "value" : true
+      },
+      "walk" : {
+        "value" : true
+      },
+      "reviveStepsEnable" : {
+        "value" : false
+      },
+      "PathThemeMapList" : {
+        "value" : 0
+      },
+      "walkMinimumCompleteCount" : {
+        "value" : false
+      },
+      "sportsTasks" : {
+        "value" : false
+      },
+      "AutoAntSportsTaskList" : {
+        "value" : true
+      },
+      "AntSportsTaskList" : {
+        "value" : [ ]
+      },
+      "receiveCoinAsset" : {
+        "value" : true
+      },
+      "donateCharityCoinType" : {
+        "value" : 1
+      },
+      "donateCharityCoinAmount" : {
+        "value" : 100
+      },
+      "coinExchangeDoubleCard" : {
+        "value" : false
+      },
+      "club" : {
+        "value" : false
+      },
+      "clubTrainItemType" : {
+        "value" : 0
+      },
+      "clubTradeMemberType" : {
+        "value" : 0
+      },
+      "clubTradeMemberList" : {
+        "value" : [ ]
+      },
+      "tiyubiz" : {
+        "value" : false
+      },
+      "syncStepCount" : {
+        "value" : 22000
+      },
+      "earliestSyncStepTime" : {
+        "value" : 0,
+        "maxLimit" : 23,
+        "minLimit" : 0
+      },
+      "latestExchangeTime" : {
+        "value" : 22
+      },
+      "minExchangeCount" : {
+        "value" : 10
+      },
+      "neverLand" : {
+        "value" : true
+      },
+      "QUERY_SIGN" : {
+        "value" : true
+      },
+      "QUERY_TASK_CENTER" : {
+        "value" : true
+      },
+      "QUERY_BUBBLE_TASK" : {
+        "value" : true
+      },
+      "QUERY_ITEM_LIST" : {
+        "value" : true
+      },
+      "WALK_GRID" : {
+        "value" : true
+      },
+      "WALK_GRID_MAX" : {
+        "value" : 5
+      },
+      "WALK_GRID_LIMIT" : {
+        "value" : 10000
+      },
+      "MapListSwitch" : {
+        "value" : true
+      },
+      "awardspecialActivityReceive" : {
+        "value" : true
+      }
+    },
+    "BaseModel" : {
+      "enable" : {
+        "value" : true
+      },
+      "stayAwake" : {
+        "value" : true
+      },
+      "checkInterval" : {
+        "value" : 3000000,
+        "maxLimit" : 720,
+        "minLimit" : 1,
+        "multiple" : 60000
+      },
+      "execAtTimeList" : {
+        "value" : [ "-1" ]
+      },
+      "wakenAtTimeList" : {
+        "value" : [ "-1" ]
+      },
+      "energyTime" : {
+        "value" : [ "0600-0735" ]
+      },
+      "timedTaskModel" : {
+        "value" : 0
+      },
+      "timeoutRestart" : {
+        "value" : false
+      },
+      "backupConfigDays" : {
+        "value" : 5
+      },
+      "newRpc" : {
+        "value" : true
+      },
+      "debugMode" : {
+        "value" : false
+      },
+      "rpcRequestList" : {
+        "value" : { }
+      },
+      "rpcRequestTaskList" : {
+        "value" : [ ]
+      },
+      "batteryPerm" : {
+        "value" : false
+      },
+      "recordLog" : {
+        "value" : true
+      },
+      "showToast" : {
+        "value" : true
+      },
+      "enableOnGoing" : {
+        "value" : false
+      },
+      "toastOffsetY" : {
+        "value" : 0
+      },
+	  "taskInterval" : {
+          "value" : 1000
+       }
+    },
+    "AnswerAI" : {
+      "enable" : {
+        "value" : false
+      },
+      "useGeminiAI" : {
+        "value" : 0
+      },
+      "getTongyiAIToken" : { },
+      "setTongyiAIToken" : {
+        "value" : ""
+      },
+      "useGeminiAIToken" : {
+        "value" : ""
+      }
+    },
+    "AntForestV2" : {
+      "enable" : {
+        "value" : true
+      },
+      "collectEnergy" : {
+        "value" : true
+      },
+      "batchRobEnergy" : {
+        "value" : true
+      },
+      "dontCollectList" : {
+        "value" : [ "2088822743053170", "2088402108801985", "2088522227426291" ]
+      },
+      "pkEnergy" : {
+        "value" : true
+      },
+      "energyPvp" : {
+        "value" : true
+      },
+      "collectWateringBubble" : {
+        "value" : true
+      },
+      "wateredFriendList" : {
+        "value" : { }
+      },
+      "collectRobExpandEnergy" : {
+        "value" : 10,
+        "maxLimit" : 1000000,
+        "minLimit" : 0
+      },
+      "expiredEnergy" : {
+        "value" : true
+      },
+      "queryInterval" : {
+        "value" : "2000-2500"
+      },
+      "collectInterval" : {
+        "value" : "1500-2300"
+      },
+      "doubleCollectInterval" : {
+        "value" : "600-750"
+      },
+      "balanceNetworkDelay" : {
+        "value" : false
+      },
+      "advanceTime" : {
+        "value" : 0,
+        "maxLimit" : 500,
+        "minLimit" : -2147483648
+      },
+      "tryCount" : {
+        "value" : 1,
+        "maxLimit" : 10,
+        "minLimit" : 0
+      },
+      "retryInterval" : {
+        "value" : 1000,
+        "maxLimit" : 10000,
+        "minLimit" : 0
+      },
+      "drawGameCenterAward" : {
+        "value" : true
+      },
+      "CollectSelfEnergyType" : {
+        "value" : 0
+      },
+      "CollectSelfEnergyThreshold" : {
+        "value" : 0,
+        "maxLimit" : 10000,
+        "minLimit" : 0
+      },
+      "CollectBombEnergyLimit" : {
+        "value" : 0,
+        "maxLimit" : 100000,
+        "minLimit" : 0
+      },
+      "continuousUseCardOptions" : {
+        "value" : [ ]
+      },
+      "backpackOnlyOptions" : {
+        "value" : [ ]
+      },
+      "returnWater10" : {
+        "value" : 0
+      },
+      "returnWater18" : {
+        "value" : 0
+      },
+      "returnWater33" : {
+        "value" : 0
+      },
+      "waterFriendType" : {
+        "value" : 1
+      },
+      "waterFriendList" : {
+        "value" : { }
+      },
+      "waterFriendEnergySendChat" : {
+        "value" : false
+      },
+      "doubleWaterFriendEnergy" : {
+        "value" : false
+      },
+      "helpFriendCollectType" : {
+        "value" : 0
+      },
+      "helpFriendCollectList" : {
+        "value" : [ ]
+      },
+      "helpFriendCollectListLimit" : {
+        "value" : 0,
+        "maxLimit" : 100000,
+        "minLimit" : 0
+      },
+      "vitalityExchangeBenefit" : {
+        "value" : true
+      },
+      "vitality_ExchangeBenefitList" : {
+        "value" : { }
+      },
+      "whackModeName" : {
+        "value" : 1
+      },
+      "whackModeGames" : {
+        "value" : 5
+      },
+      "whackModeCount" : {
+        "value" : 15
+      },
+      "earliestwhackMoleTime" : {
+        "value" : 8,
+        "maxLimit" : 23,
+        "minLimit" : 0
+      },
+      "collectProp" : {
+        "value" : true
+      },
+      "whoYouWantToGiveTo" : {
+        "value" : [ ]
+      },
+      "energyRain" : {
+        "value" : true
+      },
+      "giveEnergyRainList" : {
+        "value" : [ ]
+      },
+      "useEnergyRainLimit" : {
+        "value" : true
+      },
+      "userPatrol" : {
+        "value" : true
+      },
+      "combineAnimalPiece" : {
+        "value" : true
+      },
+      "consumeAnimalPropType" : {
+        "value" : 1
+      },
+      "receiveForestTaskAward" : {
+        "value" : true
+      },
+      "AutoAntForestVitalityTaskList" : {
+        "value" : true
+      },
+      "AntForestVitalityTaskList" : {
+        "value" : [ "逛一逛今日头条", "去淘宝签到领红包", "去蚂蚁阿福揭秘真相", "去淘宝花花乐领红包" ]
+      },
+      "collectGiftBox" : {
+        "value" : true
+      },
+      "medicalHealth" : {
+        "value" : false
+      },
+      "greenLife" : {
+        "value" : false
+      },
+      "greenRent" : {
+        "value" : false
+      },
+      "youthPrivilege" : {
+        "value" : false
+      },
+      "ecoLife" : {
+        "value" : true
+      },
+      "ecoLifeOptions" : {
+        "value" : [ "dish" ]
+      },
+      "partnerteamWater" : {
+        "value" : true
+      },
+      "partnerteamWaterNum" : {
+        "value" : 20,
+        "maxLimit" : 5000,
+        "minLimit" : 10
+      },
+      "loveteamWater" : {
+        "value" : true
+      },
+      "loveteamWaterNum" : {
+        "value" : 20,
+        "maxLimit" : 10000,
+        "minLimit" : 20
+      },
+      "ForestHunt" : {
+        "value" : true
+      },
+      "AutoAntForestHuntTaskList" : {
+        "value" : true
+      },
+      "AntForestHuntTaskList" : {
+        "value" : [ "【限时】玩游戏得2次机会", "去乐园开宝箱得机会", "去神奇鱼塘投喂动物" ]
+      },
+      "ForestHuntDraw" : {
+        "value" : true
+      },
+      "ForestHuntHelp" : {
+        "value" : false
+      },
+      "NORMALForestHuntHelp" : {
+        "value" : false
+      },
+      "ACTIVITYForestHuntHelp" : {
+        "value" : false
+      },
+      "ForestHuntHelpList" : {
+        "value" : [ ]
+      },
+      "dress" : {
+        "value" : false
+      },
+      "dressDetailList" : {
+        "value" : ""
+      },
+      "dressDetailListClear" : { }
+    },
+    "AntMember" : {
+      "enable" : {
+        "value" : true
+      },
+      "AntMemberTask" : {
+        "value" : true
+      },
+      "AutoAntMemberTaskList" : {
+        "value" : true
+      },
+      "AntMemberTaskList" : {
+        "value" : [ ]
+      },
+      "memberSign" : {
+        "value" : true
+      },
+      "memberPointExchangeBenefit" : {
+        "value" : true
+      },
+      "memberPointExchangeBenefitList" : {
+        "value" : [ ]
+      },
+      "collectSesame" : {
+        "value" : true
+      },
+      "AutoMemberCreditSesameTaskList" : {
+        "value" : true
+      },
+      "MemberCreditSesameTaskList" : {
+        "value" : [ "坚持签到领奖励", "去淘宝直播", "用额度免押金下单", "去玩疯狂水世界", "去玩三国冰河时代", "去租赁下单", "0.01元/日起", "去玩青云诀之伏魔", "添加桌面小组件", "去点击先用后付商品", "坚持逛裹酱领福利", "去玩龙迹之城", "头条刷热点领现金", "去快手刷视频", "逛淘宝签到", "一键查询爱车估值", "完成旧衣回收得现金", "0.1元起租会员攒粒", "618去淘金币赢20亿", "去点淘逛一逛", "去淘金币逛一逛", "去玩一局斗地主", "去玩斗破苍穹", "领视频金币", "坚持看直播领福利", "坚持种水果", "去玩浪漫餐厅", "去玩寻道大千", "9.9元抢租3天大疆", "每日施肥领水果", "实时看热点", "逛逛淘金币", "来淘金币赢20亿", "去玩烈焰觉醒", "去玩保卫向日葵", "芝麻租赁下单得芝麻粒", "去逛一逛消消乐", "去玩几何王国", "逛逛天猫领红包", "去玩向僵尸开炮", "去雇佣芝麻大表鸽", "去玩小游戏", "去玩时光杂货店" ]
+      },
+      "SesameGrowthBehavior" : {
+        "value" : false
+      },
+      "enableGameCenter" : {
+        "value" : false
+      },
+      "KuaiDiFuLiJia" : {
+        "value" : false
+      },
+      "signinCalendar" : {
+        "value" : false
+      },
+      "enableGoldTicket" : {
+        "value" : false
+      },
+      "merchantSignIn" : {
+        "value" : false
+      },
+      "merchantKMDK" : {
+        "value" : false
+      }
+    }
+  }
+}

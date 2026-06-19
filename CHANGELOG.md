@@ -33,3 +33,28 @@
   - 移除之前独立的 `startTaskAndWait()` 方法，统一由 `startTask(force, false, 300_000L)` 替代
   - `startAllTask()` 改用 `startTask(force, false, 300_000L)` 串行执行，每任务超时 5 分钟
 - **原因**: 方案三提供灵活的 sync 参数控制；方案五提供超时保护防止任务卡死。融合后 API 统一、无重复代码，同时保留完整向后兼容性。
+
+## 2026-06-19
+
+### 海洋模块新增可配置操作间隔
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/antOcean/AntOcean.java`
+  - `[jim]-config_v2.json`
+- **改动**:
+  - `AntOcean` 新增 `operateInterval` 配置字段（`IntegerModelField`，范围 0~10000ms，默认 1200ms，Web 界面显示名称为"操作间隔(毫秒)"）
+  - 新增静态辅助方法 `sleepOperateInterval()`
+  - 以下方法的循环迭代间增加可配置间隔（共 16 处）：
+    - 收取能量球：`collectEnergy()`
+    - 清理海域：`cleanOcean()`
+    - 检查奖励：`checkReward()`
+    - 收集潘多拉能量：`collectReplicaAsset()`
+    - 潘多拉任务奖励：`queryReplicaTaskList()`
+    - 海域/鱼群处理：`querySeaAreaDetailList()`
+    - 好友海域清理（3 段）：`queryUserRanking()`、`cleanFriendOcean()`
+    - 日常任务领取：`queryTaskList()`、`receiveTaskAward()`
+    - 万能拼图（3 处）：`exchangeUniversalPiece()`、`useUniversalPiece()`
+  - 将原有的硬编码 `TimeUtil.sleep(500)` 和 `TimeUtil.sleep(1000)` 替换为可配置的 `sleepOperateInterval()`
+  - `[jim]-config_v2.json`：AntOcean 段添加 `operateInterval` 配置项；修复 BaseModel 段 `toastOffsetY` 后缺失的逗号
+- **原因**: 海洋模块内部循环密集发出 RPC 请求时缺乏统一可配置间隔，容易触发支付宝限流。在海洋模块自身设置页面增加"操作间隔"字段（非基础设置），默认 1.2 秒，允许用户按需关闭（设为 0）或调大间隔。
+
