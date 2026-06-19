@@ -26,6 +26,7 @@ import io.github.lazyimmortal.sesame.entity.AlipayTree;
 import io.github.lazyimmortal.sesame.entity.CooperateUser;
 import io.github.lazyimmortal.sesame.hook.Toast;
 import io.github.lazyimmortal.sesame.model.base.TaskCommon;
+import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import io.github.lazyimmortal.sesame.util.*;
 import io.github.lazyimmortal.sesame.util.idMap.*;
 
@@ -199,6 +200,7 @@ public class ProtectEcology extends ModelTask {
                 jo = cooperatePlants.getJSONObject(i);
                 String cooperationId = jo.getString("cooperationId");
                 queryCooperatePlant(userId, cooperationId);
+                BaseModel.sleepTaskInterval();
             }
             CooperationIdMap.save(userId);
         }
@@ -695,6 +697,7 @@ public class ProtectEcology extends ModelTask {
                     certNum++;
                     TimeUtil.sleep(300);
                 }
+                BaseModel.sleepTaskInterval();
             }
         }
         catch (Throwable t) {

@@ -14,6 +14,7 @@ import io.github.lazyimmortal.sesame.data.task.ModelTask;
 import io.github.lazyimmortal.sesame.entity.AlipayAntStallTaskList;
 import io.github.lazyimmortal.sesame.entity.AlipayUser;
 import io.github.lazyimmortal.sesame.model.base.TaskCommon;
+import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import io.github.lazyimmortal.sesame.model.task.antFarm.AntFarm.TaskStatus;
 import io.github.lazyimmortal.sesame.model.task.readingDada.ReadingDada;
 import io.github.lazyimmortal.sesame.util.*;
@@ -851,11 +852,13 @@ public class AntStall extends ModelTask {
             for (int i = 0; i < friendRankList.length(); i++) {
                 JSONObject friend = friendRankList.getJSONObject(i);
                 if (!friend.optBoolean("canInviteRegister", false) || !"UNREGISTER".equals(friend.getString("userStatus"))) {
+                    BaseModel.sleepTaskInterval();
                     continue;
                 }
                 /* 名单筛选 */
                 String userId = friend.getString("userId");
                 if (!inviteRegisterList.getValue().contains(userId)) {
+                    BaseModel.sleepTaskInterval();
                     continue;
                 }
                 jo = new JSONObject(AntStallRpcCall.friendInviteRegister(userId));
@@ -863,6 +866,7 @@ public class AntStall extends ModelTask {
                     Log.farm("蚂蚁新村⛪邀请[" + UserIdMap.getMaskName(userId) + "]开通新村");
                     return;
                 }
+                BaseModel.sleepTaskInterval();
             }
         }
         catch (Throwable t) {

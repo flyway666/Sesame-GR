@@ -11,6 +11,7 @@ import io.github.lazyimmortal.sesame.data.task.ModelTask;
 import io.github.lazyimmortal.sesame.hook.ApplicationHook;
 import io.github.lazyimmortal.sesame.hook.Toast;
 import io.github.lazyimmortal.sesame.model.base.TaskCommon;
+import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import io.github.lazyimmortal.sesame.data.modelFieldExt.BooleanModelField;
 import io.github.lazyimmortal.sesame.data.modelFieldExt.ChoiceModelField;
 import io.github.lazyimmortal.sesame.data.modelFieldExt.IntegerModelField;
@@ -843,6 +844,7 @@ public class AntOrchard extends ModelTask {
                     } else {
                         Log.record("领取奖励失败: " + triggerJo.toString());
                     }
+                    BaseModel.sleepTaskInterval();
                 }
             } else {
                 Log.record("获取任务列表失败: " + jo.getString("resultDesc"));
