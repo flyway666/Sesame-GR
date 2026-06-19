@@ -81,7 +81,7 @@ jobs:
 
       # 步骤5：上传签名后的APK及校验和到Release
       - name: Upload signed assets to Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.2.1
         with:
           name: ${{ github.event.release.tag_name }}
           files: |
