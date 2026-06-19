@@ -61,7 +61,8 @@ public class ProtectEcology extends ModelTask {
     private static SelectAndCountModelField protectBeachList;
     private static BooleanModelField protectAnimal;
     private static SelectModelField protectAnimalList;
-    
+    private static IntegerModelField operateInterval;
+
     @Override
     public ModelFields getFields() {
         ModelFields modelFields = new ModelFields();
@@ -84,6 +85,7 @@ public class ProtectEcology extends ModelTask {
         modelFields.addField(protectBeachNum = new IntegerModelField("protectBeachNum", "保护海洋 |海滩保护下限", 1));
         modelFields.addField(protectBeach = new BooleanModelField("protectBeach", "保护海洋 | 海滩", false));
         modelFields.addField(protectBeachList = new SelectAndCountModelField("protectOceanList", "保护海洋 | 海滩列表", new LinkedHashMap<>(), AlipayBeach::getList, "请填写保护次数(上限总量)"));
+        modelFields.addField(operateInterval = new IntegerModelField("operateInterval", "操作间隔(毫秒)", 1200, 0, 10000));
         return modelFields;
     }
     
@@ -222,7 +224,7 @@ public class ProtectEcology extends ModelTask {
             int energyCount = getEnergyCount(userId, cooperationId, waterDayLimit);
             if (energyCount > 0 && energyCount <= userCurrentEnergy) {
                 if (cooperateWater(userId, cooperationId, energyCount, name)) {
-                    TimeUtil.sleep(300);
+                    sleepOperateInterval();
                 }
             }
         }
@@ -299,12 +301,12 @@ public class ProtectEcology extends ModelTask {
                 if (!exchangeTree(projectId, projectName)) {
                     break;
                 }
-                TimeUtil.sleep(300);
+                sleepOperateInterval();
                 exchangeableTree = queryTreeForExchange(projectId);
             }
         }
     }
-    
+
     private static void protectReserve() {
         Map<String, Integer> map = protectReserveList.getValue();
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
@@ -325,7 +327,7 @@ public class ProtectEcology extends ModelTask {
                     break;
                 }
                 Status.exchangeReserveToday(projectId);
-                TimeUtil.sleep(300);
+                sleepOperateInterval();
             }
         }
     }
@@ -341,11 +343,11 @@ public class ProtectEcology extends ModelTask {
                     break;
                 }
                 exchangeableTree = queryTreeForExchange(projectId);
-                TimeUtil.sleep(300);
+                sleepOperateInterval();
             }
         }
     }
-    
+
     public static JSONArray queryTreeItemsForExchange(String applyActions, String itemTypes) {
         try {
             JSONObject jo = new JSONObject(ProtectTreeRpcCall.queryTreeItemsForExchange(applyActions, itemTypes));
@@ -625,7 +627,7 @@ public class ProtectEcology extends ModelTask {
                                 break;
                             }
                             Status.exchangeReserveToday(projectId);
-                            TimeUtil.sleep(300);
+                            sleepOperateInterval();
                         }
                     }
                 }
@@ -660,7 +662,7 @@ public class ProtectEcology extends ModelTask {
                     }
                     while (protectBeachNum > certNum && queryCultivationDetail(cultivationCode, projectCode)) {
                         certNum++;
-                        TimeUtil.sleep(300);
+                        sleepOperateInterval();
                     }
                 }
             }
@@ -693,7 +695,7 @@ public class ProtectEcology extends ModelTask {
                 }
                 while (count > certNum && queryCultivationDetail(cultivationCode, projectCode)) {
                     certNum++;
-                    TimeUtil.sleep(300);
+                    sleepOperateInterval();
                 }
             }
         }
@@ -756,6 +758,13 @@ public class ProtectEcology extends ModelTask {
         return false;
     }
     
+    private static void sleepOperateInterval() {
+        int interval = operateInterval.getValue();
+        if (interval > 0) {
+            TimeUtil.sleep(interval);
+        }
+    }
+
     public static class ExchangeableTree {
         boolean canExchange;
         int projectId;

@@ -65,7 +65,8 @@ public class AntMember extends ModelTask {
     private BooleanModelField enableGameCenter;
     private BooleanModelField merchantSignIn;
     private BooleanModelField merchantKMDK;
-    
+    private static IntegerModelField operateInterval;
+
     @Override
     public ModelFields getFields() {
         ModelFields modelFields = new ModelFields();
@@ -89,6 +90,7 @@ public class AntMember extends ModelTask {
         modelFields.addField(enableGoldTicket = new BooleanModelField("enableGoldTicket", "黄金票 | 签到", false));
         modelFields.addField(merchantSignIn = new BooleanModelField("merchantSignIn", "商家服务 | 签到", false));
         modelFields.addField(merchantKMDK = new BooleanModelField("merchantKMDK", "商家服务 | 开门打卡", false));
+        modelFields.addField(operateInterval = new IntegerModelField("operateInterval", "操作间隔(毫秒)", 1200, 0, 10000));
         return modelFields;
     }
     
@@ -205,7 +207,7 @@ public class AntMember extends ModelTask {
                 int page = 1;
                 do {
                     jo = new JSONObject(AntMemberRpcCall.queryPointCert(page, 8));
-                    TimeUtil.sleep(500);
+                    sleepOperateInterval();
                     if (!MessageUtil.checkResultCode(TAG, jo)) {
                         break;
                     }
@@ -428,6 +430,7 @@ public class AntMember extends ModelTask {
                 if (MessageUtil.checkResultCode(TAG, jo)) {
                     Log.other("会员任务🎖️领取[" + bizTitle + "]奖励#获得[" + pointAmount + "积分]");
                 }
+                sleepOperateInterval();
             }
             if (hasNextPage) {
                 queryPointCert(page + 1, pageSize);
@@ -446,7 +449,7 @@ public class AntMember extends ModelTask {
         try {
             do {
                 JSONObject jo = new JSONObject(AntMemberRpcCall.signPageTaskList());
-                TimeUtil.sleep(500);
+                sleepOperateInterval();
                 boolean doubleCheck = false;
                 if (!MessageUtil.checkResultCode(TAG + " signPageTaskList", jo)) {
                     return;
@@ -491,6 +494,7 @@ public class AntMember extends ModelTask {
             }
             JSONArray availableTaskList = jo.getJSONArray("availableTaskList");
             if (doBrowseTask(availableTaskList)) {
+                sleepOperateInterval();
                 queryAllStatusTaskList();
             }
         }
@@ -636,7 +640,7 @@ public class AntMember extends ModelTask {
             String targetBusiness = taskConfigInfo.getJSONArray("targetBusiness").getString(0);
             for (int i = left; i <= right; i++) {
                 JSONObject jo = new JSONObject(AntMemberRpcCall.applyTask(name, id));
-                TimeUtil.sleep(300);
+                sleepOperateInterval();
                 if (!MessageUtil.checkResultCode(TAG, jo)) {
                     continue;
                 }
@@ -652,7 +656,7 @@ public class AntMember extends ModelTask {
                     bizSubType = targetBusinessArray[0];
                 }
                 jo = new JSONObject(AntMemberRpcCall.executeTask(bizParam, bizSubType));
-                TimeUtil.sleep(300);
+                sleepOperateInterval();
                 if (!MessageUtil.checkResultCode(TAG, jo)) {
                     continue;
                 }
@@ -813,7 +817,7 @@ public class AntMember extends ModelTask {
                     
                     Log.farm("芭芭农场🌳施肥" + dailyAppWateringCount + "次[" + stageText + "]");
                     Log.other("攒芝麻分🎖️芭芭农场施肥[" + title + "]已施肥" + dailyAppWateringCount + "次");
-                    
+                    sleepOperateInterval();
                 }
             }
         }
@@ -1017,6 +1021,7 @@ public class AntMember extends ModelTask {
                 JSONArray taskList = moduleObj.getJSONArray("taskList");
                 for (int j = 0; j < taskList.length(); j++) {
                     processTask(taskList.getJSONObject(j));
+                    sleepOperateInterval();
                 }
             }
         }
@@ -1182,6 +1187,7 @@ public class AntMember extends ModelTask {
                 if (exchangeBenefit(benefitId, itemId)) {
                     String point = pricePresentation.getString("point");
                     Log.other("会员积分🎐兑换[" + name + "]#花费[" + point + "积分]");
+                    sleepOperateInterval();
                 }
             }
             MemberBenefitIdMap.save(userId);
@@ -1262,7 +1268,7 @@ public class AntMember extends ModelTask {
                 if (!toCompleteVO.has("todayFinish")) {
                     // 领取任务
                     s = AntMemberRpcCall.joinSesameTask(taskTemplateId);
-                    TimeUtil.sleep(200);
+                    sleepOperateInterval();
                     responseObj = new JSONObject(s);
                     if (!MessageUtil.checkResultCode(TAG, responseObj)) {
                         Log.error(TAG + "芝麻信用💳领取任务[" + taskTitle + "]失败#" + s);
@@ -1281,7 +1287,7 @@ public class AntMember extends ModelTask {
                 // 完成任务
                 for (int j = completedNum; j < needCompleteNum; j++) {
                     s = AntMemberRpcCall.finishSesameTask(recordId);
-                    TimeUtil.sleep(2000);
+                    sleepOperateInterval();
                     responseObj = new JSONObject(s);
                     //检查并标记黑名单任务
                     MessageUtil.checkResultCodeAndMarkTaskBlackList("MemberCreditSesameTaskList", taskTitle, responseObj);
@@ -1295,7 +1301,7 @@ public class AntMember extends ModelTask {
                 }
                 
                 jo = new JSONObject(AntMemberRpcCall.queryCreditFeedback());
-                TimeUtil.sleep(300);
+                sleepOperateInterval();
                 if (!MessageUtil.checkResultCode(TAG, jo)) {
                     return;
                 }
@@ -1309,7 +1315,7 @@ public class AntMember extends ModelTask {
                     String creditFeedbackId = jo.getString("creditFeedbackId");
                     String potentialSize = jo.getString("potentialSize");
                     jo = new JSONObject(AntMemberRpcCall.collectCreditFeedback(creditFeedbackId));
-                    TimeUtil.sleep(300);
+                    sleepOperateInterval();
                     if (MessageUtil.checkResultCode(TAG, jo)) {
                         Log.other("收芝麻粒🙇🏻‍♂️领取[" + taskTitle + "]奖励[芝麻粒*" + potentialSize + "]");
                     }
@@ -1409,14 +1415,14 @@ public class AntMember extends ModelTask {
                         //String forestHomePageResponse = AntMemberRpcCall.queryforestHomePage();
                         //TimeUtil.sleep(2000);
                         String forestTaskResponse = AntMemberRpcCall.forestTask();
-                        TimeUtil.sleep(500);
+                        sleepOperateInterval();
                         String forestreceiveTaskAward = AntMemberRpcCall.forestreceiveTaskAward();
                     }
                     else if ("WELFARE_PLUS_ANT_OCEAN".equals(taskCode)) {
                         //String oceanHomePageResponse = AntMemberRpcCall.queryoceanHomePage();
                         //TimeUtil.sleep(2000);
                         String oceanTaskResponse = AntMemberRpcCall.oceanTask();
-                        TimeUtil.sleep(500);
+                        sleepOperateInterval();
                         String oceanreceiveTaskAward = AntMemberRpcCall.oceanreceiveTaskAward();
                     }
                     if (taskBaseInfo != null) {
@@ -1491,7 +1497,7 @@ public class AntMember extends ModelTask {
                         else {
                             Log.i(TAG, "sendtrigger failed for taskId: " + taskId);
                         }
-                        TimeUtil.sleep(1000);
+                        sleepOperateInterval();
                     }
                 }
             }
@@ -1522,6 +1528,13 @@ public class AntMember extends ModelTask {
         catch (Throwable t) {
             Log.i(TAG, "signinCalendar err:");
             Log.printStackTrace(TAG, t);
+        }
+    }
+
+    private static void sleepOperateInterval() {
+        int interval = operateInterval.getValue();
+        if (interval > 0) {
+            TimeUtil.sleep(interval);
         }
     }
 }

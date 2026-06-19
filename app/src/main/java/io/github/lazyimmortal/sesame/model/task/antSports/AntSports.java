@@ -95,6 +95,7 @@ public class AntSports extends ModelTask {
     //private SelectModelField neverLandOptions;
     private SelectModelField neverLandBenefitList;
     private ChoiceModelField energyStrategy;
+    private static IntegerModelField operateInterval;
 
     @Override
     public String getName() {
@@ -142,6 +143,7 @@ public class AntSports extends ModelTask {
         modelFields.addField(WALK_GRID_LIMIT = new IntegerModelField("WALK_GRID_LIMIT", "健康岛 | 使用能量泵剩余能量值(低于该值停止使用)", 10000));
         modelFields.addField(MapListSwitch = new BooleanModelField("MapListSwitch", "健康岛 | 自动切岛", false));
         modelFields.addField(awardspecialActivityReceive = new BooleanModelField("awardspecialActivityReceive", "健康岛 | 领取活动岛奖励", false));
+        modelFields.addField(operateInterval = new IntegerModelField("operateInterval", "操作间隔(毫秒)", 1200, 0, 10000));
         return modelFields;
     }
 
@@ -412,7 +414,7 @@ public class AntSports extends ModelTask {
                     String assetId = jo.getString("assetId");
                     int prizeAmount = jo.getInt("prizeAmount");
                     if (receiveCoinAsset(assetId, prizeAmount, taskName)) {
-                        TimeUtil.sleep(1000);
+                        sleepOperateInterval();
                     }
                     continue;
                 }
@@ -435,7 +437,7 @@ public class AntSports extends ModelTask {
                         continue;
                     }
                     if (completeTask(taskAction, taskId, taskName)) {
-                        TimeUtil.sleep(2000);
+                        sleepOperateInterval();
                     }
                     continue;
                 }
@@ -468,7 +470,7 @@ public class AntSports extends ModelTask {
             MessageUtil.checkResultCodeAndMarkTaskBlackList("AntSportsTaskList", taskName, jo);
             if (MessageUtil.checkSuccess(TAG, jo)) {
                 Log.other("运动任务🧾完成[得运动币:" + taskName + "]");
-                TimeUtil.sleep(1000);
+                sleepOperateInterval();
                 return true;
             }
         } catch (Throwable t) {
@@ -523,7 +525,7 @@ public class AntSports extends ModelTask {
                 int coinAmount = jo.getInt("coinAmount");
                 String simpleSourceName = jo.optString("simpleSourceName");
                 if (receiveCoinAsset(assetId, coinAmount, simpleSourceName)) {
-                    TimeUtil.sleep(500);
+                    sleepOperateInterval();
                 }
             }
         } catch (Throwable t) {
@@ -639,7 +641,7 @@ public class AntSports extends ModelTask {
             if (tempPathId != null) {
                 goingPathId = tempPathId;
             }
-            TimeUtil.sleep(1000);
+            sleepOperateInterval();
             if (isNeedJoinNewPath(goingPathId)) {
                 if (walkMinimumCompleteCount.getValue()) {
                     goingPathId = getWalkPathMinCompleteCount();
@@ -817,7 +819,7 @@ public class AntSports extends ModelTask {
             for (int i = 0; i < treasureBoxList.length(); i++) {
                 JSONObject treasureBox = treasureBoxList.getJSONObject(i);
                 receiveEvent(treasureBox.getString("boxNo"));
-                TimeUtil.sleep(1000);
+                sleepOperateInterval();
             }
         } catch (Throwable t) {
             Log.i(TAG, "openTreasureBox err:");
@@ -1168,6 +1170,9 @@ public class AntSports extends ModelTask {
                     } else {
                         Log.record("文体每日任务" + " " + jo);
                     }
+                    sleepOperateInterval();
+                        Log.record("文体每日任务" + " " + jo);
+                    }
                 }
             } else {
                 Log.record("文体每日任务" + " " + s);
@@ -1261,6 +1266,7 @@ public class AntSports extends ModelTask {
                         Log.record("文体中心领取奖励");
                         Log.i(jo.toString());
                     }
+                    sleepOperateInterval();
                 }
             } else {
                 Log.record("文体中心领取奖励");
@@ -1403,7 +1409,7 @@ public class AntSports extends ModelTask {
                 for (int k = 0; k < bubbleList.length(); k++) {
                     String bubbleId = bubbleList.getJSONObject(k).getString("bubbleId");
                     collectBubble(bubbleId, "[买卖]");
-                    TimeUtil.sleep(200);
+                    sleepOperateInterval();
                 }
             }
 
@@ -1424,7 +1430,7 @@ public class AntSports extends ModelTask {
                         String bubbleId = roombubbleList.getJSONObject(l).getString("bubbleId");
                         // 收取第i号房间需要收取训练好友的第l个能量球
                         collectBubble(bubbleId, "[训练]");
-                        TimeUtil.sleep(200);
+                        sleepOperateInterval();
                     }
                 }
 
@@ -1435,10 +1441,10 @@ public class AntSports extends ModelTask {
                 // 购买好友
                 if (clubTradeMemberType.getValue() != TradeMemberType.NONE) {
                     queryMemberPriceRanking(roomId);
-                    TimeUtil.sleep(200);
+                    sleepOperateInterval();
                 }
             }
-            TimeUtil.sleep(200);
+            sleepOperateInterval();
 
             // 训练好友
             JSONObject joTrain = new JSONObject(AntSportsRpcCall.queryClubHome());
@@ -1451,7 +1457,7 @@ public class AntSports extends ModelTask {
                 if (roomTrain.getJSONArray("memberList").length() != 0) {
                     JSONObject member = roomTrain.getJSONArray("memberList").getJSONObject(0);
                     trainMember(member);
-                    TimeUtil.sleep(1000);
+                    sleepOperateInterval();
                 }
             }
 
@@ -1474,7 +1480,7 @@ public class AntSports extends ModelTask {
                             autoTrainMember(roomId, gmtEnd);
                         }, updateTime));
                     }
-                    TimeUtil.sleep(200);
+                    sleepOperateInterval();
                 }
             }
         } catch (Throwable t) {
@@ -1572,7 +1578,7 @@ public class AntSports extends ModelTask {
             }
             JSONObject assetsInfo = jo1.getJSONObject("assetsInfo");
             energyBalance = assetsInfo.getInt("energyBalance");
-            TimeUtil.sleep(200);
+            sleepOperateInterval();
             JSONObject jo = new JSONObject(AntSportsRpcCall.queryMemberPriceRankingEnergy(energyBalance));
             if (!MessageUtil.checkResultCode(TAG, jo)) {
                 return;
@@ -1790,7 +1796,7 @@ public class AntSports extends ModelTask {
             if (MessageUtil.checkSuccess(TAG, jsonResult)) {
                 String taskName = task.getString("title");
                 Log.other("悦动健康🚑️完成任务[" + taskName + "]");
-                TimeUtil.sleep(1000);
+                sleepOperateInterval();
                 return true;
             }
         } catch (Exception e) {
@@ -1984,7 +1990,7 @@ public class AntSports extends ModelTask {
                 int walkGridcount = 0;
                 if (canWalkGrid(branchId, mapId) && queryUserEnergy() >= 5 && queryUserEnergy() >= WALK_GRID_LIMIT.getValue()) {
                     while (walkGrid(branchId, mapId, mapName)) {
-                        TimeUtil.sleep(2000);
+                        sleepOperateInterval();
                         if (WALK_GRID_MAX.getValue() == 0) {
                             continue;
                         }
@@ -2008,7 +2014,7 @@ public class AntSports extends ModelTask {
                         return;
                     }
                     while (remainBuildingEnergyProcess > 0 && canBuild(mapId)) {
-                        TimeUtil.sleep(2000);
+                        sleepOperateInterval();
                         if (remainBuildingEnergyProcess >= 50 && ((WALK_GRID_MAX.getValue() - buildcount) >= 10 || WALK_GRID_MAX.getValue() == 0) && queryUserEnergy() >= 50) {
                             remainBuildingEnergyProcess = build(branchId, mapId, mapName, 10);
                             buildcount = buildcount + 10;
@@ -2091,7 +2097,7 @@ public class AntSports extends ModelTask {
                     if ("AD_BALL".equals(task.getString("taskId"))) {
                         task.put("lightTaskId", "adBubble");
                         if (receiveBrowseReward(task)) {
-                            TimeUtil.sleep(1000);
+                            sleepOperateInterval();
                             needRetry = true;
                         }
                     } else if ("STRATEGY_BALL".equals(task.getString("taskId"))) {
@@ -2290,13 +2296,13 @@ public class AntSports extends ModelTask {
                     } else if ("PROMOKERNEL_TASK".equals(taskType)) {
                         if (completeTask(task)) {
                             task.put("taskStatus", "TO_RECEIVE");
-                            TimeUtil.sleep(2000);
+                            sleepOperateInterval();
                             needRetry = true;
                         }
                     }
                 } else if ("TO_RECEIVE".equals(status)) {
                     if (receiveTaskReward(task)) {
-                        TimeUtil.sleep(1000);
+                        sleepOperateInterval();
                         needRetry = true;
                     }
                 }
@@ -2335,6 +2341,7 @@ public class AntSports extends ModelTask {
                 if (receiveBrowseReward(task)) {
                     hasNewTask = true;
                 }
+                sleepOperateInterval();
             }
 
             if (hasNewTask) {
@@ -2472,6 +2479,13 @@ public class AntSports extends ModelTask {
             Log.printStackTrace(TAG, e);
         }
         return false;
+    }
+
+    private static void sleepOperateInterval() {
+        int interval = operateInterval.getValue();
+        if (interval > 0) {
+            TimeUtil.sleep(interval);
+        }
     }
 
     // 任务状态枚举
