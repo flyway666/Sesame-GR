@@ -67,16 +67,7 @@ public class BaseModel extends Model {
     private static final IntegerModelField toastOffsetY = new IntegerModelField("toastOffsetY", "气泡纵向偏移", 0);
     @Getter
     private static final BooleanModelField enableOnGoing = new BooleanModelField("enableOnGoing", "开启状态栏禁删", false);
-    @Getter
-    private static final IntegerModelField taskInterval = new IntegerModelField("taskInterval", "子任务时间间隔", 1000, 0, 10000);
-
-    public static void sleepTaskInterval() {
-        int interval = taskInterval.getValue();
-        if (interval > 0) {
-            TimeUtil.sleep(interval);
-        }
-    }
-
+    
     @Override
     public String getName() {
         return "基础";
@@ -123,7 +114,6 @@ public class BaseModel extends Model {
         //modelFields.addField(closeCaptchaDialogVPN);
         modelFields.addField(enableOnGoing);
         modelFields.addField(toastOffsetY);
-        modelFields.addField(taskInterval);
         return modelFields;
     }
     

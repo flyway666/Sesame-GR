@@ -27,7 +27,6 @@ import io.github.lazyimmortal.sesame.entity.CustomOption;
 import io.github.lazyimmortal.sesame.entity.FarmOrnaments;
 import io.github.lazyimmortal.sesame.model.base.TaskCommon;
 import io.github.lazyimmortal.sesame.model.extensions.ExtensionsHandle;
-import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import io.github.lazyimmortal.sesame.model.normal.answerAI.AnswerAI;
 import io.github.lazyimmortal.sesame.rpc.intervallimit.RpcIntervalLimit;
 import io.github.lazyimmortal.sesame.util.*;
@@ -859,7 +858,6 @@ public class AntFarm extends ModelTask {
                         benevolenceScore -= rewardCount;
                         Log.farm("打赏好友💰[" + UserIdMap.getMaskName(rewardFriend.friendId) + "]#得" + rewardCount + "颗爱心鸡蛋");
                     }
-                    BaseModel.sleepTaskInterval();
                 }
                 rewardList = null;
             }
@@ -920,7 +918,6 @@ public class AntFarm extends ModelTask {
                         }
                         Log.farm(s);
                     }
-                    BaseModel.sleepTaskInterval();
                 }
             }
         } catch (Throwable t) {
@@ -2038,7 +2035,6 @@ public class AntFarm extends ModelTask {
                         break;
                     }
                 }
-                BaseModel.sleepTaskInterval();
             }
         } catch (Throwable t) {
             Log.i(TAG, "feedFriend err:");

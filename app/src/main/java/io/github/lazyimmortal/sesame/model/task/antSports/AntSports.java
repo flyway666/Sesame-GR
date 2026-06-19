@@ -30,7 +30,6 @@ import io.github.lazyimmortal.sesame.hook.ApplicationHook;
 import io.github.lazyimmortal.sesame.hook.Toast;
 import io.github.lazyimmortal.sesame.model.base.TaskCommon;
 import io.github.lazyimmortal.sesame.model.extensions.ExtensionsHandle;
-import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import io.github.lazyimmortal.sesame.model.task.antStall.AntStall;
 import io.github.lazyimmortal.sesame.model.task.antStall.AntStallRpcCall;
 import io.github.lazyimmortal.sesame.util.Log;
@@ -1169,7 +1168,6 @@ public class AntSports extends ModelTask {
                     } else {
                         Log.record("文体每日任务" + " " + jo);
                     }
-                    BaseModel.sleepTaskInterval();
                 }
             } else {
                 Log.record("文体每日任务" + " " + s);
@@ -1263,7 +1261,6 @@ public class AntSports extends ModelTask {
                         Log.record("文体中心领取奖励");
                         Log.i(jo.toString());
                     }
-                    BaseModel.sleepTaskInterval();
                 }
             } else {
                 Log.record("文体中心领取奖励");

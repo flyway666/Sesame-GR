@@ -14,7 +14,6 @@ import io.github.lazyimmortal.sesame.entity.AlipayAntOceanAntiepTaskList;
 import io.github.lazyimmortal.sesame.entity.AlipayUser;
 import io.github.lazyimmortal.sesame.hook.ApplicationHook;
 import io.github.lazyimmortal.sesame.model.base.TaskCommon;
-import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import io.github.lazyimmortal.sesame.model.task.antFarm.AntFarm.TaskStatus;
 import io.github.lazyimmortal.sesame.model.task.antForest.AntForestRpcCall;
 import io.github.lazyimmortal.sesame.util.Log;
@@ -285,7 +284,6 @@ public class AntOcean extends ModelTask {
                         }
                     }
                 }
-                BaseModel.sleepTaskInterval();
             }
         }
         catch (Throwable t) {
@@ -303,7 +301,6 @@ public class AntOcean extends ModelTask {
                     checkReward(cleanRewardVOS);
                     Log.forest("神奇海洋🐳清理[" + UserIdMap.getMaskName(userId) + "]海域");
                 }
-                BaseModel.sleepTaskInterval();
             }
         }
         catch (Throwable t) {
@@ -431,7 +428,6 @@ public class AntOcean extends ModelTask {
                 if (MessageUtil.checkResultCode(TAG, jo)) {
                     Log.forest("神奇海洋🐳[学习海洋科普知识]#获得[潘多拉能量*1]");
                 }
-                BaseModel.sleepTaskInterval();
             }
         }
         catch (Throwable t) {
@@ -471,7 +467,6 @@ public class AntOcean extends ModelTask {
                 JSONObject bizInfo = new JSONObject(jo.getString("bizInfo"));
                 String taskTitle = bizInfo.getString("taskTitle");
                 receiveReplicaTaskAward(taskType, taskTitle);
-                BaseModel.sleepTaskInterval();
             }
         }
         catch (Throwable t) {
