@@ -19,7 +19,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public abstract class ModelTask extends Model {
 
@@ -167,6 +170,66 @@ public abstract class ModelTask extends Model {
         return false;
     }
 
+    /**
+     * 提交任务并等待执行完成（带超时）。
+     * 用于 startAllTask 中按顺序串行执行，避免并发触发支付宝限流。
+     *
+     * @param force    是否强制重新启动（如果任务已在运行）
+     * @param timeoutMs 单任务超时毫秒数，超时后强制停止该任务
+     * @return 任务是否成功执行完成
+     */
+    public Boolean startTaskAndWait(Boolean force, long timeoutMs) {
+        Future<?> future;
+        // 同步块只做检查和提交，不在持有锁时等待
+        synchronized (this) {
+            if (MAIN_TASK_MAP.containsKey(this)) {
+                if (!force) {
+                    return false;
+                }
+                stopTask();
+            }
+            try {
+                if (!isEnable() || !check()) {
+                    return false;
+                }
+            } catch (Exception e) {
+                Log.printStackTrace(e);
+                return false;
+            }
+            if (isSync()) {
+                mainRunnable.run();
+                return true;
+            }
+            future = MAIN_THREAD_POOL.submit(mainRunnable);
+        }
+        // 不在同步块内等待，避免阻塞线程池的 CallerRunsPolicy 或死锁
+        try {
+            future.get(timeoutMs, TimeUnit.MILLISECONDS);
+            return true;
+        } catch (TimeoutException e) {
+            Log.i(getName(), "执行超时(" + timeoutMs + "ms)，已强制停止");
+            future.cancel(true);
+            stopTask();
+            return false;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            future.cancel(true);
+            stopTask();
+            return false;
+        } catch (ExecutionException e) {
+            Log.printStackTrace(e);
+            stopTask();
+            return false;
+        }
+    }
+
+    /**
+     * 提交任务并等待执行完成，默认超时 5 分钟。
+     */
+    public Boolean startTaskAndWait(Boolean force) {
+        return startTaskAndWait(force, 300_000L);
+    }
+
     public synchronized void stopTask() {
         for (ChildModelTask childModelTask : childTaskMap.values()) {
             try {
@@ -198,7 +261,7 @@ public abstract class ModelTask extends Model {
         for (Model model : getModelArray()) {
             if (model != null) {
                 if (ModelType.TASK == model.getType()) {
-                    if (((ModelTask) model).startTask(force)) {
+                    if (((ModelTask) model).startTaskAndWait(force)) {
                         try {
                             Thread.sleep(750);
                         } catch (InterruptedException e) {
