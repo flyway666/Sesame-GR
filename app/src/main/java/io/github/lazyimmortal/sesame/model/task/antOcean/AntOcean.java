@@ -8,6 +8,7 @@ import io.github.lazyimmortal.sesame.data.ModelFields;
 import io.github.lazyimmortal.sesame.data.ModelGroup;
 import io.github.lazyimmortal.sesame.data.modelFieldExt.BooleanModelField;
 import io.github.lazyimmortal.sesame.data.modelFieldExt.ChoiceModelField;
+import io.github.lazyimmortal.sesame.data.modelFieldExt.IntegerModelField;
 import io.github.lazyimmortal.sesame.data.modelFieldExt.SelectModelField;
 import io.github.lazyimmortal.sesame.data.task.ModelTask;
 import io.github.lazyimmortal.sesame.entity.AlipayAntOceanAntiepTaskList;
@@ -65,7 +66,8 @@ public class AntOcean extends ModelTask {
     private BooleanModelField exchangeUniversalPiece;
     private BooleanModelField useUniversalPiece;
     private BooleanModelField replica;
-    
+    private static IntegerModelField operateInterval;
+
     @Override
     public ModelFields getFields() {
         ModelFields modelFields = new ModelFields();
@@ -77,6 +79,7 @@ public class AntOcean extends ModelTask {
         modelFields.addField(exchangeUniversalPiece = new BooleanModelField("exchangeUniversalPiece", "万能拼图 | 制作", false));
         modelFields.addField(useUniversalPiece = new BooleanModelField("useUniversalPiece", "万能拼图 | 使用", false));
         modelFields.addField(replica = new BooleanModelField("replica", "潘多拉海域", false));
+        modelFields.addField(operateInterval = new IntegerModelField("operateInterval", "操作间隔(毫秒)", 1200, 0, 10000));
         return modelFields;
     }
     
@@ -151,7 +154,14 @@ public class AntOcean extends ModelTask {
         }
         return false;
     }
-    
+
+    private static void sleepOperateInterval() {
+        int interval = operateInterval.getValue();
+        if (interval > 0) {
+            TimeUtil.sleep(interval);
+        }
+    }
+
     public static void initAntOceanAntiepTaskListMap(boolean AutoAntOceanAntiepTaskList, boolean queryTaskList) {
         try {
             //初始化AntOceanAntiepTaskListMap
@@ -284,6 +294,7 @@ public class AntOcean extends ModelTask {
                         }
                     }
                 }
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -301,6 +312,7 @@ public class AntOcean extends ModelTask {
                     checkReward(cleanRewardVOS);
                     Log.forest("神奇海洋🐳清理[" + UserIdMap.getMaskName(userId) + "]海域");
                 }
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -383,6 +395,7 @@ public class AntOcean extends ModelTask {
                         combineFish(fishId);
                     }
                 }
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -428,6 +441,7 @@ public class AntOcean extends ModelTask {
                 if (MessageUtil.checkResultCode(TAG, jo)) {
                     Log.forest("神奇海洋🐳[学习海洋科普知识]#获得[潘多拉能量*1]");
                 }
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -467,6 +481,7 @@ public class AntOcean extends ModelTask {
                 JSONObject bizInfo = new JSONObject(jo.getString("bizInfo"));
                 String taskTitle = bizInfo.getString("taskTitle");
                 receiveReplicaTaskAward(taskType, taskTitle);
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -583,6 +598,7 @@ public class AntOcean extends ModelTask {
                 if (LastseaAreaStatus.equals("WAIT_FOR_UNLOCK")) {
                     AntOceanRpcCall.repairSeaArea();
                 }
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -690,6 +706,7 @@ public class AntOcean extends ModelTask {
                 if (cleanOceanType.getValue() != CleanOceanType.NONE) {
                     cleanFriendOcean(fillFlag);
                 }
+                sleepOperateInterval();
             }
             int pos = 20;
             List<String> idList = new ArrayList<>();
@@ -716,6 +733,7 @@ public class AntOcean extends ModelTask {
                                 return;
                             }
                         }
+                        sleepOperateInterval();
                     }
                     idList.clear();
                 }
@@ -734,6 +752,7 @@ public class AntOcean extends ModelTask {
                             return;
                         }
                     }
+                    sleepOperateInterval();
                 }
             }
         }
@@ -757,7 +776,7 @@ public class AntOcean extends ModelTask {
                 return;
             }
             if (cleanFriendOcean(userId)) {
-                TimeUtil.sleep(1000);
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -829,9 +848,9 @@ public class AntOcean extends ModelTask {
                 if (TaskStatus.TODO.name().equals(taskStatus) && !finishOceanTask(jo)) {
                     continue;
                 }
-                TimeUtil.sleep(500);
-                
+
                 receiveTaskAward(sceneCode, taskType, taskTitle);
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -844,7 +863,7 @@ public class AntOcean extends ModelTask {
     private static void receiveTaskAward(String sceneCode, String taskType, String taskTitle) {
         try {
             JSONObject jo = new JSONObject(AntOceanRpcCall.receiveTaskAward(sceneCode, taskType));
-            TimeUtil.sleep(500);
+            sleepOperateInterval();
             //检查并标记黑名单任务
             MessageUtil.checkResultCodeAndMarkTaskBlackList("AntOceanAntiepTaskList", taskTitle, jo);
             if (MessageUtil.checkSuccess(TAG, jo)) {
@@ -941,7 +960,7 @@ public class AntOcean extends ModelTask {
                 if (!exchangeUniversalPiece(exchangeNum)) {
                     break;
                 }
-                TimeUtil.sleep(1000);
+                sleepOperateInterval();
                 duplicatePieceNum -= exchangeNum * 10;
             }
         }
@@ -1000,6 +1019,7 @@ public class AntOcean extends ModelTask {
                     }
                     JSONArray fishVOS = jo.getJSONArray("fishVOS");
                     holdsNum -= useUniversalPiece(fishVOS, holdsNum);
+                    sleepOperateInterval();
                 }
             }
         }
@@ -1018,6 +1038,7 @@ public class AntOcean extends ModelTask {
                     continue;
                 }
                 count += useUniversalPiece(fishVO, holdsNum - count);
+                sleepOperateInterval();
             }
         }
         catch (Throwable t) {
@@ -1049,7 +1070,7 @@ public class AntOcean extends ModelTask {
                 }
             }
             if (useUniversalPiece(assetsDetails, name, holdsNum - assetsDetails.length())) {
-                TimeUtil.sleep(1000);
+                sleepOperateInterval();
                 return assetsDetails.length();
             }
         }
