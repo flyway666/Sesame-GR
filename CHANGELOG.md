@@ -2,12 +2,14 @@
 
 ## 2026-06-19
 
-### 任务串行执行改造（防限流）
+### 任务调度统一重构（方案三 + 方案五融合）
 
 - **文件**: `app/src/main/java/io/github/lazyimmortal/sesame/data/task/ModelTask.java`
 - **改动**:
-  - 新增导入：`Future`、`TimeoutException`、`ExecutionException`
-  - 新增 `startTaskAndWait(Boolean force, long timeoutMs)` 方法：提交任务到线程池后用 `Future.get(timeout, unit)` 等待完成，超时则 `cancel(true)` 中断并 `stopTask()` 清理
-  - 新增 `startTaskAndWait(Boolean force)` 重载，默认超时 5 分钟
-  - 修改 `startAllTask()`：将 `startTask(force)` 替换为 `startTaskAndWait(force)`，实现任务串行执行
-- **原因**: 原架构下所有任务通过 `MAIN_THREAD_POOL` 并发执行（`corePoolSize = 模型总数`），短时间内密集发出大量 RPC 请求，易触发支付宝限流。改为串行执行 + 超时保护后，每个任务执行完或超时才启动下一个，降低限流风险。
+  - 将 `startTask()` 重构为 4 个重载的统一方法族，覆盖全部执行模式：
+    - `startTask()` / `startTask(Boolean force)` — 原行为，向后兼容
+    - `startTask(Boolean force, Boolean sync)` — **方案三**：调用方控制同步/异步
+    - `startTask(Boolean force, Boolean sync, long timeoutMs)` — **融合核心**：sync=true 同步执行；sync=false 且 timeoutMs>0 时提交线程池 + `Future.get(timeout)` 超时保护；sync=false 且 timeoutMs≤0 时原异步行为
+  - 移除之前独立的 `startTaskAndWait()` 方法，统一由 `startTask(force, false, 300_000L)` 替代
+  - `startAllTask()` 改用 `startTask(force, false, 300_000L)` 串行执行，每任务超时 5 分钟
+- **原因**: 方案三提供灵活的 sync 参数控制；方案五提供超时保护防止任务卡死。融合后 API 统一、无重复代码，同时保留完整向后兼容性。
