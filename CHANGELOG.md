@@ -58,3 +58,49 @@
   - `[jim]-config_v2.json`：AntOcean 段添加 `operateInterval` 配置项；修复 BaseModel 段 `toastOffsetY` 后缺失的逗号
 - **原因**: 海洋模块内部循环密集发出 RPC 请求时缺乏统一可配置间隔，容易触发支付宝限流。在海洋模块自身设置页面增加"操作间隔"字段（非基础设置），默认 1.2 秒，允许用户按需关闭（设为 0）或调大间隔。
 
+## 2026-06-20
+
+### 支付宝运动/生态保护/蚂蚁会员 新增可配置操作间隔
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/antSports/AntSports.java`
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/protectEcology/ProtectEcology.java`
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/antMember/AntMember.java`
+- **改动**:
+  - 三个模块各自新增 `operateInterval` 配置字段（`IntegerModelField`，范围 0~10000ms，默认 1200ms，Web 界面显示名称为"操作间隔(毫秒)"）
+  - 各自新增静态辅助方法 `sleepOperateInterval()`
+  - **支付宝运动（AntSports）**：以下方法的循环迭代间增加可配置间隔（共 22 处）：
+    - `userTaskGroupQuery()`、`userTaskRightsReceive()` — 文体任务/奖励循环
+    - `sportsTasks()` — 运动任务列表循环
+    - `receiveCoinAsset()` — 收取运动币气泡循环
+    - `queryClubHome()` — 抢好友多个循环（买卖/训练/购买）
+    - `walk()` — 行走路线 do-while 循环
+    - `completeTask()` — 任务完成延迟
+    - `queryMemberPriceRanking()` — 抢购好友 RPC 间隔
+    - `openTreasureBox()` — 宝箱领取循环
+    - `walkGrid()`、`build()` — 能量泵 while 循环
+    - `queryAndProcessBubbleTasks()` — 气泡任务循环
+    - `processTaskCenter()` — 任务中心循环
+    - `processBrowseTasks()` — 浏览任务循环
+  - **生态保护（ProtectEcology）**：以下 7 处 `TimeUtil.sleep(300)` 全部替换为可配置间隔：
+    - `queryCooperatePlant()` — 合种浇水
+    - `protectTree()` — 植树循环
+    - `protectReserve()` — 保护地循环
+    - `protectAnimal()` — 护林员循环
+    - `protectReserveMinNum()` — 最少保护循环
+    - `protectBeachMinNum()` — 海滩最少保护循环
+    - `protectBeach()` — 海滩保护循环
+  - **蚂蚁会员（AntMember）**：以下方法的循环迭代间增加可配置间隔（共 18 处）：
+    - `initMemberTaskListMap()` — 任务列表分页 do-while
+    - `signPageTaskList()` — 签到任务页 do-while
+    - `queryPointCert()` — 积分领取 for 循环
+    - `doBrowseTask()` — 浏览任务 for 循环（2 处）
+    - `collectSesame()` — 芝麻粒领取多层 for 循环（4 处）
+    - `RecommendTask()` — 推荐任务 for 循环（2 处）
+    - `OrdinaryTask()` — 普通任务 for 循环
+    - `queryAllStatusTaskList()` — 递归调用前
+    - `handleGrowthGuideTasks()` — 成长引导 for 循环
+    - `memberPointExchangeBenefit()` — 权益兑换 for 循环
+    - `queryAndProcessTaskList()` — 任务模块嵌套 for 循环
+- **原因**: 上述三个模块内部循环密集发出 RPC 请求时缺乏统一可配置间隔，容易触发支付宝限流。在每个模块自身设置页面增加"操作间隔"字段，默认 1.2 秒，允许用户按需关闭（设为 0）或调大间隔。
+
