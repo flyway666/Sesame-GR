@@ -104,3 +104,90 @@
     - `queryAndProcessTaskList()` — 任务模块嵌套 for 循环
 - **原因**: 上述三个模块内部循环密集发出 RPC 请求时缺乏统一可配置间隔，容易触发支付宝限流。在每个模块自身设置页面增加"操作间隔"字段，默认 1.2 秒，允许用户按需关闭（设为 0）或调大间隔。
 
+## 2026-06-20
+
+### 待添加 operateInterval 的模块分析报告
+
+- **文件**: `计划增加限流20260620.md`
+- **改动**:
+  - 对照已完成的 AntOcean/AntSports/ProtectEcology/AntMember，逐一扫描 `model/task/` 下所有模块
+  - 依据 `ModelOrder.java` 注册列表和 `[jim]-config_v2.json` 配置段，识别出 **6 个待添加 operateInterval 的模块**
+  - **🔴 最高优先级**: AntForestV2（44 处 sleep、82 个循环、116 次 RPC 调用）、AntFarm（23 处 sleep、99 个循环、129 次 RPC 调用）
+  - **🟡 中优先级**: AntStall（10 处 sleep）、AntOrchard（5 处 sleep）、GreenFinance（19 处 sleep）
+  - **🟢 低优先级**: AntDodo（1 处 sleep）、AncientTree（3 处 sleep）
+  - 另外 4 个模块（AntBookRead/ConsumeGold/OmegakoiTown/ReadingDada）无 sleep 调用，暂不处理
+- **原因**: 为后续批量改造提供决策依据，明确各模块限流改造的优先级和工作量。
+
+## 2026-06-20
+
+### 芭芭农场新增可配置操作间隔
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/antOrchard/AntOrchard.java`
+- **改动**:
+  - `AntOrchard` 新增 `operateInterval` 配置字段（`IntegerModelField`，范围 0~10000ms，默认 1200ms，Web 界面显示名称为"操作间隔(毫秒)"）
+  - 新增静态辅助方法 `sleepOperateInterval()`
+  - 以下方法的循环迭代间增加可配置间隔（共 5 处）：
+    - `orchardSpreadManure()` — 施肥 while 循环
+    - `handleTaskList()` — 任务列表 for 循环
+    - `finishOrchardTask()` — 广告任务 for 循环
+    - `orchardAssistFriend()` — 好友助力 for 循环
+    - `smashedGoldenEgg()` — 砸金蛋 for 循环
+  - 将原有的硬编码 `TimeUtil.sleep(500)` 和 `TimeUtil.sleep(5000)` 替换为可配置的 `sleepOperateInterval()`
+- **原因**: 芭芭农场模块内部循环密集发出 RPC 请求时缺乏统一可配置间隔，容易触发支付宝限流。在农场自身设置页面增加"操作间隔"字段，默认 1.2 秒，允许用户按需关闭（设为 0）或调大间隔。
+
+## 2026-06-20
+
+### 蚂蚁新村新增可配置操作间隔
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/antStall/AntStall.java`
+- **改动**:
+  - `AntStall` 新增 `operateInterval` 配置字段（`IntegerModelField`，范围 0~10000ms，默认 1200ms，Web 界面显示名称为"操作间隔(毫秒)"）
+  - 新增静态辅助方法 `sleepOperateInterval()`
+  - 以下方法的循环迭代间增加可配置间隔（共 5 处）：
+    - 新村任务列表：`taskList()` — 完成任务后循环间隔
+    - 木兰市集奖励领取：`doStallTask()` — 奖励领取内循环间隔
+    - 分享助力好友：`assistFriend()` — 好友列表循环间隔
+    - 丢肥料：`throwManure()` — 批量丢肥料间的 finally 间隔
+    - 贴罚单：`pasteTicket()` — 两个摊位循环间隔
+  - 将原有的硬编码 `TimeUtil.sleep(1000)` 和 `TimeUtil.sleep(5000)` 替换为可配置的 `sleepOperateInterval()`
+- **原因**: 蚂蚁新村模块内部循环密集发出 RPC 请求时缺乏统一可配置间隔，容易触发支付宝限流。在新村模块自身设置页面增加"操作间隔"字段，默认 1.2 秒，允许用户按需关闭（设为 0）或调大间隔。
+
+## 2026-06-20
+
+### 蚂蚁庄园新增可配置操作间隔
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/antFarm/AntFarm.java`
+- **改动**:
+  - AntFarm 新增 `operateInterval` 配置字段（`IntegerModelField`，范围 0~10000ms，默认 1200ms，Web 界面显示名称为"操作间隔(毫秒)"）
+  - 新增静态辅助方法 `sleepOperateInterval()`
+  - 以下循环迭代间增加可配置间隔（共 13 处）：
+    - `donation()` for 循环 — 捐赠
+    - `recordFarmGame()` do-while 循环 — 小鸡游戏
+    - `listFarmTask()` for 循环 — 庄园任务列表
+    - `useFarmTool()` while 循环 — 加速工具
+    - `visitFriend()` / `cook()` for 循环 — 访问好友/厨房制作
+    - `queryChickenDiary()` for 循环 — 小鸡日记
+    - `BuyMallItem()` while 循环 — 商城兑换
+    - 任务完成/奖励领取 for 循环（3 处）
+    - 装扮兑换 for 循环
+    - 宝箱领取 while 循环
+- **原因**: 蚂蚁庄园内部循环密集发出 RPC 请求时缺乏可配置间隔，容易触发支付宝限流。
+
+## 2026-06-20
+
+### 绿色金融新增可配置操作间隔
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/task/greenFinance/GreenFinance.java`
+- **改动**:
+  - `GreenFinance` 新增 `operateInterval` 配置字段（`IntegerModelField`，范围 0~10000ms，默认 1200ms，Web 界面显示名称为"操作间隔(毫秒)"）
+  - 新增静态辅助方法 `sleepOperateInterval()`
+  - 以下方法的循环迭代间增加可配置间隔（共 5 处）：
+    - `doTick()` — 打卡项目 for 循环
+    - `donation()` — 捐助项目 for 循环
+    - `batchStealFriend()` — 好友列表分页 while 循环及内部好友 for 循环（3 处）
+  - 将原有的硬编码 `TimeUtil.sleep(1500)`、`TimeUtil.sleep(1000)` 替换为可配置的 `sleepOperateInterval()`
+- **原因**: 绿色金融模块内部循环密集发出 RPC 请求时缺乏可配置间隔，容易触发支付宝限流。

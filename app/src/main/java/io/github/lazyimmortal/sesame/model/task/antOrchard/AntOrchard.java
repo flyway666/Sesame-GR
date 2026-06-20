@@ -473,7 +473,7 @@ public class AntOrchard extends ModelTask {
                 querySpreadManureActivity();
 
                 // 等待间隔时间
-                int interval = executeInterval.getValue() != null ? executeInterval.getValue() : 500;
+                int interval = executeInterval.getValue() != null ? executeInterval.getValue() : 1200;
                 TimeUtil.sleep(interval);
 
                 if (!hasSpread) {
@@ -721,7 +721,8 @@ public class AntOrchard extends ModelTask {
                     if (!finishOrchardTask(jo)) {
                         continue;
                     }
-                    TimeUtil.sleep(500);
+                int interval = executeInterval.getValue() != null ? executeInterval.getValue() : 1200;
+                TimeUtil.sleep(interval);
                 }
 
                 // 处理已完成的任务奖励（已在triggerTbTask中统一处理）
@@ -782,7 +783,8 @@ public class AntOrchard extends ModelTask {
                         Log.record("失败：芭芭农场广告任务📺[" + title + "] " + finishResponse.optString("desc"));
                         break;
                     }
-                    TimeUtil.sleep(500);
+                int interval = executeInterval.getValue() != null ? executeInterval.getValue() : 1200;
+                TimeUtil.sleep(interval);
                 }
                 return true;
             }
@@ -1147,7 +1149,8 @@ public class AntOrchard extends ModelTask {
                 }
 
                 // 每次砸蛋后等待一下
-                TimeUtil.sleep(500);
+                int interval = executeInterval.getValue() != null ? executeInterval.getValue() : 1200;
+                TimeUtil.sleep(interval);
             }
         } catch (Throwable t) {
             Log.i(TAG, "smashedGoldenEgg err:");
