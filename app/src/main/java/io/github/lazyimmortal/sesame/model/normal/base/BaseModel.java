@@ -68,9 +68,7 @@ public class BaseModel extends Model {
     @Getter
     private static final BooleanModelField enableOnGoing = new BooleanModelField("enableOnGoing", "开启状态栏禁删", false);
     @Getter
-    private static final BooleanModelField closeCaptchaDialog = new BooleanModelField("closeCaptchaDialog", "弹窗验证(自动关闭)", true);
-    @Getter
-    private static final IntegerModelField closeCaptchaDialogDelay = new IntegerModelField("closeCaptchaDialogDelay", "弹窗验证时间(毫秒)", 3000, 100, 30000);
+    private static final IntegerModelField closeCaptchaDialogDelay = new IntegerModelField("closeCaptchaDialogDelay", "弹窗验证时间(毫秒，0为关闭)", 3000, 0, 30000);
     
     @Override
     public String getName() {
@@ -118,7 +116,6 @@ public class BaseModel extends Model {
         //modelFields.addField(closeCaptchaDialogVPN);
         modelFields.addField(enableOnGoing);
         modelFields.addField(toastOffsetY);
-        modelFields.addField(closeCaptchaDialog);
         modelFields.addField(closeCaptchaDialogDelay);
         return modelFields;
     }

@@ -278,9 +278,9 @@ public class SimplePageManager {
                         protected void afterHookedMethod(MethodHookParam param) {
                             Dialog dialog = (Dialog) param.thisObject;
                             addDialogIfNotExists(dialog, "CaptchaDialog.show()");
-                            // 自动关闭验证码弹窗（如果配置开启）
-                            if (BaseModel.getCloseCaptchaDialog().getValue()) {
-                                long delayMs = BaseModel.getCloseCaptchaDialogDelay().getValue();
+                            // 自动关闭验证码弹窗（如果配置时间 > 0）
+                            long delayMs = BaseModel.getCloseCaptchaDialogDelay().getValue();
+                            if (delayMs > 0) {
                                 handler.postDelayed(() -> {
                                     try {
                                         if (dialog.isShowing()) {
