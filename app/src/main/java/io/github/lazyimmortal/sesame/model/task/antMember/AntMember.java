@@ -25,6 +25,7 @@ import io.github.lazyimmortal.sesame.util.idMap.MemberBenefitIdMap;
 import io.github.lazyimmortal.sesame.util.idMap.MemberCreditSesameTaskListMap;
 import io.github.lazyimmortal.sesame.util.idMap.PromiseSimpleTemplateIdMap;
 import io.github.lazyimmortal.sesame.util.idMap.UserIdMap;
+import io.github.lazyimmortal.sesame.data.modelFieldExt.IntegerModelField;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
