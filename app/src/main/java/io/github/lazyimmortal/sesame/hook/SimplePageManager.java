@@ -7,7 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import io.github.lazyimmortal.sesame.util.Log;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
