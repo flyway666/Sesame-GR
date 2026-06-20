@@ -285,7 +285,7 @@ public class SimplePageManager {
                                     try {
                                         if (dialog.isShowing()) {
                                             dialog.dismiss();
-                                            Log.record("验证码弹窗已自动关闭");
+                                            Log.i(TAG, "验证码弹窗已自动关闭");
                                         }
                                     } catch (Throwable ignored) {
                                     }
