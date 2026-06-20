@@ -1171,8 +1171,6 @@ public class AntSports extends ModelTask {
                         Log.record("文体每日任务" + " " + jo);
                     }
                     sleepOperateInterval();
-                        Log.record("文体每日任务" + " " + jo);
-                    }
                 }
             } else {
                 Log.record("文体每日任务" + " " + s);
