@@ -634,6 +634,12 @@
       "toastOffsetY" : {
         "value" : 0
       },
+      "closeCaptchaDialog" : {
+        "value" : true
+      },
+      "closeCaptchaDialogDelay" : {
+        "value" : 3000
+      },
 	  "taskInterval" : {
           "value" : 1000
        }

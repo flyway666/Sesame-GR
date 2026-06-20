@@ -191,3 +191,18 @@
     - `batchStealFriend()` — 好友列表分页 while 循环及内部好友 for 循环（3 处）
   - 将原有的硬编码 `TimeUtil.sleep(1500)`、`TimeUtil.sleep(1000)` 替换为可配置的 `sleepOperateInterval()`
 - **原因**: 绿色金融模块内部循环密集发出 RPC 请求时缺乏可配置间隔，容易触发支付宝限流。
+
+## 2026-06-20
+
+### 基础设置新增"弹窗验证"开关，自动关闭验证码弹窗
+
+- **文件**:
+  - `app/src/main/java/io/github/lazyimmortal/sesame/model/normal/base/BaseModel.java`
+  - `app/src/main/java/io/github/lazyimmortal/sesame/hook/SimplePageManager.java`
+  - `[jim]-config_v2.json`
+- **改动**:
+  - `BaseModel` 新增 `closeCaptchaDialog` 配置字段（`BooleanModelField`，默认 `true`，Web 界面显示名称为"弹窗验证(自动关闭)"）
+  - `BaseModel` 新增 `closeCaptchaDialogDelay` 配置字段（`IntegerModelField`，范围 100~30000ms，默认 3000ms，Web 界面显示名称为"弹窗验证时间(毫秒)"）
+  - `SimplePageManager` 中 `CaptchaDialog.show()` 的 Hook 增加自动关闭逻辑：当配置开启时，弹窗出现后可配置的延迟时间后自动调用 `dialog.dismiss()` 关闭验证码弹窗
+  - `[jim]-config_v2.json` 中 BaseModel 段添加 `closeCaptchaDialog` 和 `closeCaptchaDialogDelay` 配置项
+- **原因**: 支付宝 RPC 请求触发风控时会弹出"自动验证"滑块对话框，阻碍自动化任务继续执行。在基础设置中增加开关，允许用户开启后自动关闭验证码弹窗，避免手动干预。

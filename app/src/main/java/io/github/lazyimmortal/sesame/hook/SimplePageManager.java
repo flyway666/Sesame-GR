@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import de.robv.android.xposed.XC_MethodHook;
+import io.github.lazyimmortal.sesame.model.normal.base.BaseModel;
 import de.robv.android.xposed.XposedHelpers;
 
 /**
@@ -277,6 +278,19 @@ public class SimplePageManager {
                         protected void afterHookedMethod(MethodHookParam param) {
                             Dialog dialog = (Dialog) param.thisObject;
                             addDialogIfNotExists(dialog, "CaptchaDialog.show()");
+                            // 自动关闭验证码弹窗（如果配置开启）
+                            if (BaseModel.getCloseCaptchaDialog().getValue()) {
+                                long delayMs = BaseModel.getCloseCaptchaDialogDelay().getValue();
+                                handler.postDelayed(() -> {
+                                    try {
+                                        if (dialog.isShowing()) {
+                                            dialog.dismiss();
+                                            Log.record("验证码弹窗已自动关闭");
+                                        }
+                                    } catch (Throwable ignored) {
+                                    }
+                                }, delayMs);
+                            }
                         }
                     }
             );
