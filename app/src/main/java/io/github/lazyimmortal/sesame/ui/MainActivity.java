@@ -114,7 +114,9 @@ public class MainActivity extends BaseActivity {
         else {
             registerReceiver(broadcastReceiver, intentFilter);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		/**  去掉弹窗
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.tips);
         builder.setMessage(R.string.start_message);
         builder.setPositiveButton(R.string.btn_understood, (dialog, which) -> dialog.dismiss());
@@ -124,6 +126,8 @@ public class MainActivity extends BaseActivity {
         if (positiveButton != null) {
             positiveButton.setTextColor(ContextCompat.getColor(this, R.color.button));
         }
+		**/
+		
     }
     
     @Override
